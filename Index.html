@@ -1,0 +1,1907 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <base target="_top">
+  <meta charset="UTF-8">
+  <meta name="theme-color" content="#08080a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="HEALER OS">
+  
+  <link rel="icon" type="image/png" sizes="192x192" href="https://lh3.googleusercontent.com/d/1wIjGvNq_JC6oEB8qJ2CDFIlsQU39x_tU=s192">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://lh3.googleusercontent.com/d/1wIjGvNq_JC6oEB8qJ2CDFIlsQU39x_tU=s180">
+  <meta property="og:image" content="https://lh3.googleusercontent.com/d/1wIjGvNq_JC6oEB8qJ2CDFIlsQU39x_tU=s512">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+:root{
+  --bg:#08080a;
+  --panel:#111114;
+  --panel-soft:#17171b;
+  --panel-elevated:#1d1d22;
+  --line:#29292f;
+  --line-soft:#202025;
+  --text:#f8f8fa;
+  --muted:#9b9ba6;
+  --accent:#a78bfa;
+  --accent2:#ec4899;
+  --green:#4ade80;
+  --orange:#fbbf24;
+  --red:#fb7185;
+  --safe:env(safe-area-inset-bottom);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{
+  margin:0;
+  min-height:100%;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Manrope,-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text",sans-serif;
+  overscroll-behavior-y:none;
+}
+body{
+  min-height:100vh;
+  background:
+    radial-gradient(circle at 85% -10%,rgba(124,58,237,.18),transparent 28%),
+    var(--bg);
+}
+button,input,select,textarea{font-family:inherit}
+.app{
+  width:100%;
+  max-width:1440px;
+  margin:0 auto;
+  min-height:100vh;
+  padding-bottom:calc(104px + var(--safe));
+}
+header{
+  position:sticky;
+  top:0;
+  z-index:30;
+  padding:14px 16px 10px;
+  background:linear-gradient(180deg,rgba(8,8,10,.98) 70%,rgba(8,8,10,0));
+  backdrop-filter:blur(24px);
+  -webkit-backdrop-filter:blur(24px);
+}
+.top{display:flex;align-items:center;justify-content:space-between}
+.brand{
+  font-size:21px;
+  font-weight:800;
+  letter-spacing:-1px;
+}
+.brand span{
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text;
+  color:transparent;
+}
+.avatar{
+  width:38px;
+  height:38px;
+  border-radius:14px;
+  display:grid;
+  place-items:center;
+  font-size:14px;
+  font-weight:800;
+  background:linear-gradient(135deg,#7c3aed,#ec4899);
+  box-shadow:0 10px 30px rgba(124,58,237,.28);
+}
+main{padding:0 14px 28px;overflow-x:hidden}
+.view{display:none;animation:viewIn .28s cubic-bezier(.2,.8,.2,1)}
+.view.active{display:block}
+@keyframes viewIn{
+  from{opacity:0;transform:translateY(8px)}
+  to{opacity:1;transform:translateY(0)}
+}
+h1{
+  margin:10px 0 7px;
+  font-size:31px;
+  line-height:1.04;
+  letter-spacing:-1.45px;
+}
+h2{
+  margin:25px 0 11px;
+  font-size:18px;
+  letter-spacing:-.45px;
+}
+p{
+  margin:6px 0 0;
+  color:var(--muted);
+  line-height:1.55;
+}
+.hero{
+  position:relative;
+  overflow:hidden;
+  padding:24px 20px 21px;
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:28px;
+  background:
+    radial-gradient(circle at 102% -5%,rgba(236,72,153,.2),transparent 35%),
+    radial-gradient(circle at 68% 15%,rgba(124,58,237,.25),transparent 45%),
+    linear-gradient(145deg,#18181d,#0f0f12);
+  box-shadow:0 22px 70px rgba(0,0,0,.34);
+}
+.hero:after{
+  content:"";
+  position:absolute;
+  width:160px;
+  height:160px;
+  border-radius:50%;
+  right:-70px;
+  bottom:-100px;
+  border:1px solid rgba(255,255,255,.08);
+}
+.eyebrow{
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:1.6px;
+  font-weight:800;
+  color:#d7c7ff;
+}
+.hero h1{max-width:690px}
+.actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:9px;
+  margin-top:18px;
+}
+.primary{
+  min-height:46px;
+  border:0;
+  border-radius:16px;
+  padding:12px 16px;
+  background:#f5f5f7;
+  color:#09090b;
+  font-size:13px;
+  font-weight:800;
+  cursor:pointer;
+  transition:transform .18s ease,opacity .18s ease;
+}
+.primary:active{transform:scale(.97)}
+.primary.ghost,.ghost{
+  color:#fff;
+  border:1px solid #303037;
+  background:#202024;
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px;
+}
+.card{
+  border:1px solid var(--line-soft);
+  border-radius:22px;
+  padding:16px;
+  background:linear-gradient(145deg,var(--panel-soft),var(--panel));
+  box-shadow:0 10px 30px rgba(0,0,0,.13);
+}
+.metric{
+  min-height:102px;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+}
+.metric b{
+  display:block;
+  margin-bottom:4px;
+  font-size:26px;
+  line-height:1;
+  letter-spacing:-1px;
+}
+.metric span,.small{
+  color:var(--muted);
+  font-size:11px;
+  line-height:1.4;
+}
+.focus{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:10px;
+}
+.focus-card{
+  min-height:145px;
+  position:relative;
+  overflow:hidden;
+}
+.focus-card strong{
+  display:block;
+  margin:10px 0 4px;
+  font-size:18px;
+  line-height:1.25;
+}
+.tag{
+  display:inline-flex;
+  align-items:center;
+  padding:6px 9px;
+  border-radius:999px;
+  background:rgba(167,139,250,.14);
+  color:#ddd6fe;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.4px;
+}
+.list{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+.row{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:14px;
+  border:1px solid var(--line-soft);
+  border-radius:19px;
+  background:linear-gradient(145deg,#151519,#101013);
+  transition:transform .16s ease,border-color .16s ease;
+}
+.row{cursor:pointer}.row:active{transform:scale(.99);border-color:#3b3450}
+.row .grow{min-width:0;flex:1}
+.row b{
+  display:block;
+  overflow:hidden;
+  font-size:13px;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.dot{
+  width:9px;
+  height:9px;
+  flex:0 0 auto;
+  border-radius:50%;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  box-shadow:0 0 15px rgba(167,139,250,.45);
+}
+.pill{
+  display:inline-flex;
+  padding:4px 7px;
+  border-radius:999px;
+  background:#29292f;
+  color:#d1d1d7;
+  font-size:9px;
+}
+
+/* ROADMAP — vertical on phone, horizontal only on large screens */
+.roadmap{
+  display:flex;
+  flex-direction:column;
+  gap:11px;
+  width:100%;
+  overflow:visible;
+}
+.month{
+  width:100%;
+  min-height:0;
+  padding:18px;
+  cursor:pointer;
+  transition:transform .18s ease,border-color .18s ease;
+}
+.month:hover{transform:translateY(-2px);border-color:#44395d}
+.month:active{transform:scale(.99)}
+.month-num{
+  position:absolute;
+  right:16px;
+  top:7px;
+  font-size:48px;
+  line-height:1;
+  font-weight:800;
+  color:#27272d;
+}
+.month h2{
+  margin:16px 52px 7px 0;
+  font-size:20px;
+}
+.progress{
+  height:8px;
+  margin-top:17px;
+  overflow:hidden;
+  border-radius:999px;
+  background:#2a2a30;
+}
+.progress i{
+  display:block;
+  height:100%;
+  border-radius:999px;
+  background:linear-gradient(90deg,#8b5cf6,#ec4899);
+  box-shadow:0 0 18px rgba(236,72,153,.25);
+}
+
+/* KANBAN — no visible scrollbar */
+.kanban{
+  display:flex;
+  gap:11px;
+  width:100%;
+  overflow-x:auto;
+  overflow-y:hidden;
+  padding:2px 1px 14px;
+  scroll-snap-type:x mandatory;
+  scrollbar-width:none;
+  -ms-overflow-style:none;
+  -webkit-overflow-scrolling:touch;
+}
+.kanban::-webkit-scrollbar{display:none}
+.column{
+  flex:0 0 calc(100vw - 42px);
+  max-width:360px;
+  min-height:390px;
+  padding:11px;
+  border:1px solid #222227;
+  border-radius:23px;
+  background:#0e0e11;
+  scroll-snap-align:center;
+}
+.column-head{
+  display:flex;
+  justify-content:space-between;
+  padding:7px 6px 13px;
+  color:#d4d4d8;
+  font-size:12px;
+  font-weight:800;
+}
+.task{
+  margin-bottom:9px;
+  padding:14px;
+  border:1px solid #2d2d33;
+  border-radius:17px;
+  background:linear-gradient(145deg,#1b1b20,#16161a);
+  cursor:grab;
+  transition:transform .18s ease,border-color .18s ease;
+}
+.task:active{transform:scale(.985)}
+.task h4{
+  margin:0 0 10px;
+  font-size:13px;
+  line-height:1.35;
+}
+.task-meta{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+}
+
+/* Funnel */
+.funnel{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:8px;
+  overflow:visible;
+}
+.stage{
+  min-width:0;
+  padding:17px 12px;
+  text-align:left;
+  border:1px solid var(--line-soft);
+  border-radius:18px;
+  background:var(--panel);
+  clip-path:none;
+}
+.stage b{
+  display:block;
+  font-size:23px;
+  line-height:1;
+  margin-bottom:6px;
+}
+.chart{
+  height:230px;
+  display:flex;
+  align-items:flex-end;
+  gap:7px;
+  padding:20px 4px 8px;
+  border-bottom:1px solid #333;
+  overflow:hidden;
+}
+.bar{
+  position:relative;
+  flex:1;
+  min-width:10px;
+  border-radius:8px 8px 2px 2px;
+  background:linear-gradient(#a78bfa,#6d28d9);
+}
+.bar span{
+  position:absolute;
+  bottom:-23px;
+  left:50%;
+  transform:translateX(-50%);
+  color:var(--muted);
+  font-size:8px;
+}
+
+/* Mind map */
+#mapCanvas{
+  position:relative;
+  width:100%;
+  height:64vh;
+  min-height:480px;
+  overflow:hidden;
+  touch-action:none;
+  border:1px solid var(--line);
+  border-radius:27px;
+  background:
+    radial-gradient(#25252b 1px,transparent 1px),
+    #0b0b0e;
+  background-size:24px 24px;
+}
+.node{
+  position:absolute;
+  min-width:120px;
+  max-width:175px;
+  padding:12px;
+  border:1px solid #444;
+  border-radius:17px;
+  background:rgba(23,23,27,.92);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  box-shadow:0 12px 30px rgba(0,0,0,.45);
+  cursor:move;
+  user-select:none;
+}
+.node.root{
+  text-align:center;
+  font-size:18px;
+  font-weight:800;
+}
+.node small{
+  display:block;
+  margin-top:5px;
+  color:#aaa;
+  font-size:9px;
+  line-height:1.35;
+}
+.edge{
+  position:absolute;
+  height:2px;
+  pointer-events:none;
+  opacity:.65;
+  background:#52525b;
+  transform-origin:left center;
+}
+
+/* Modal */
+.modal{
+  position:fixed;
+  inset:0;
+  z-index:100;
+  display:none;
+  align-items:flex-end;
+  justify-content:center;
+  background:rgba(0,0,0,.68);
+  backdrop-filter:blur(6px);
+}
+.modal.show{display:flex}
+.sheet{
+  width:100%;
+  max-width:720px;
+  max-height:90vh;
+  overflow:auto;
+  padding:20px 16px calc(24px + var(--safe));
+  border:1px solid #333;
+  border-radius:28px 28px 0 0;
+  background:#151519;
+  box-shadow:0 -25px 80px rgba(0,0,0,.55);
+  animation:sheetUp .24s cubic-bezier(.2,.8,.2,1);
+}
+@keyframes sheetUp{from{transform:translateY(42px);opacity:.7}}
+input,select,textarea{
+  width:100%;
+  margin:6px 0 13px;
+  padding:13px 14px;
+  color:#fff;
+  border:1px solid #33333a;
+  border-radius:14px;
+  outline:none;
+  background:#212126;
+  font-size:14px;
+}
+input:focus,select:focus,textarea:focus{border-color:#6d5a8b}
+textarea{min-height:92px;resize:vertical}
+.form-grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:10px;
+}
+
+/* Bottom navigation */
+nav{
+  position:fixed;
+  z-index:50;
+  left:50%;
+  bottom:calc(8px + var(--safe));
+  transform:translateX(-50%);
+  width:calc(100% - 16px);
+  max-width:760px;
+  height:72px;
+  display:flex;
+  align-items:center;
+  justify-content:space-around;
+  padding:6px;
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:25px;
+  background:rgba(24,24,29,.88);
+  backdrop-filter:blur(28px);
+  -webkit-backdrop-filter:blur(28px);
+  box-shadow:0 18px 45px rgba(0,0,0,.65);
+}
+.nav-btn{
+  min-width:54px;
+  padding:7px;
+  display:grid;
+  place-items:center;
+  gap:3px;
+  border:0;
+  color:#787882;
+  background:none;
+  font-size:9px;
+  cursor:pointer;
+}
+.nav-btn i{
+  font-style:normal;
+  font-size:21px;
+  line-height:1;
+}
+.nav-btn.active{color:#fff}
+.fab{
+  width:52px;
+  height:52px;
+  border:0;
+  border-radius:18px;
+  color:#050506;
+  background:#fff;
+  font-size:25px;
+  box-shadow:0 8px 28px rgba(255,255,255,.14);
+  transition:transform .16s ease;
+}
+.fab:active{transform:scale(.94)}
+.toast{
+  position:fixed;
+  z-index:200;
+  left:50%;
+  bottom:102px;
+  transform:translateX(-50%);
+  max-width:calc(100% - 32px);
+  padding:10px 14px;
+  opacity:0;
+  pointer-events:none;
+  color:#111;
+  border-radius:13px;
+  background:#fff;
+  font-size:12px;
+  font-weight:800;
+  text-align:center;
+  transition:.2s;
+}
+.toast.show{opacity:1}
+
+/* absolutely hide page-level horizontal overflow */
+html,body,.app,main,.view{max-width:100%;overflow-x:hidden}
+
+@media(min-width:700px){
+  header{padding:18px 22px 12px}
+  main{padding:0 20px 38px}
+  .grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .focus{grid-template-columns:1.4fr 1fr}
+  .funnel{grid-template-columns:repeat(6,minmax(0,1fr))}
+  .form-grid{grid-template-columns:1fr 1fr}
+  .column{flex-basis:320px}
+}
+@media(min-width:980px){
+  main{padding:0 28px 40px}
+  .roadmap{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+  }
+  .month{min-height:250px}
+}
+@media(min-width:1260px){
+  .roadmap{grid-template-columns:repeat(6,minmax(0,1fr))}
+  .kanban{display:grid;grid-template-columns:repeat(6,minmax(200px,1fr));overflow:visible}
+  .column{max-width:none;min-width:0}
+}
+
+.quick-task-intro{
+  margin:0 0 16px;
+  padding:14px;
+  border:1px solid rgba(167,139,250,.18);
+  border-radius:18px;
+  background:linear-gradient(145deg,rgba(124,58,237,.12),rgba(236,72,153,.06));
+}
+.quick-task-intro b{display:block;margin-bottom:4px;font-size:14px}
+.quick-task-intro p{font-size:11px;margin:0}
+.quick-label{display:block;margin:13px 0 7px;color:#b8b8c2;font-size:11px;font-weight:700}
+.choice-row{display:flex;flex-wrap:wrap;gap:7px}
+.choice{
+  min-height:37px;
+  padding:8px 11px;
+  border:1px solid #303037;
+  border-radius:12px;
+  color:#c9c9d1;
+  background:#202024;
+  font-size:11px;
+  font-weight:700;
+  cursor:pointer;
+}
+.choice.selected{
+  color:#fff;
+  border-color:#745da0;
+  background:linear-gradient(135deg,rgba(124,58,237,.5),rgba(236,72,153,.28));
+}
+.date-shortcuts{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+.advanced-toggle{
+  width:100%;
+  margin:8px 0 13px;
+  padding:11px;
+  border:1px solid #2e2e34;
+  border-radius:13px;
+  color:#aaaab4;
+  background:#1b1b20;
+  font-size:11px;
+  font-weight:700;
+  cursor:pointer;
+}
+.advanced-fields{display:none}
+.advanced-fields.show{display:block;animation:viewIn .2s ease}
+.quick-save{
+  position:sticky;
+  bottom:0;
+  width:100%;
+  margin-top:10px;
+  box-shadow:0 -12px 30px rgba(21,21,25,.85);
+}
+
+
+@media(max-width:699px){
+  .task{touch-action:manipulation;-webkit-user-drag:none}
+}
+
+
+.weekly-hero{margin-top:16px}
+.weekly-chart-tabs{
+  display:flex;
+  gap:7px;
+  overflow-x:auto;
+  padding-bottom:10px;
+  scrollbar-width:none;
+}
+.weekly-chart-tabs::-webkit-scrollbar{display:none}
+.weekly-chart-tabs .choice{flex:0 0 auto}
+.weekly-chart{
+  height:250px;
+  display:flex;
+  align-items:flex-end;
+  gap:8px;
+  padding:34px 2px 5px;
+  overflow-x:auto;
+  scrollbar-width:none;
+}
+.weekly-chart::-webkit-scrollbar{display:none}
+.weekly-bar-wrap{
+  height:100%;
+  min-width:44px;
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  align-items:center;
+  position:relative;
+}
+.weekly-value{
+  margin-bottom:6px;
+  color:#c9c9d2;
+  font-size:9px;
+  white-space:nowrap;
+}
+.weekly-bar{
+  width:min(30px,70%);
+  min-height:4px;
+  border-radius:9px 9px 3px 3px;
+  background:linear-gradient(180deg,#c4b5fd,#7c3aed 60%,#ec4899);
+  box-shadow:0 0 20px rgba(124,58,237,.22);
+  transition:height .35s cubic-bezier(.2,.8,.2,1);
+}
+.weekly-label{
+  width:100%;
+  margin-top:7px;
+  overflow:hidden;
+  color:#85858f;
+  font-size:8px;
+  text-align:center;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.weekly-empty{
+  width:100%;
+  margin:auto;
+  color:var(--muted);
+  font-size:12px;
+  text-align:center;
+}
+.weekly-help{margin-top:25px}
+.weekly-help b{font-size:15px}
+.weekly-help p{font-size:11px}
+.weekly-help strong{color:#d4d4dc}
+@media(max-width:699px){
+  #weeklyLatest{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+
+
+.guide-header{padding:10px 2px 4px}
+.guide-callout{
+  margin-top:16px;
+  padding:18px;
+  border:1px solid rgba(167,139,250,.22);
+  border-radius:22px;
+  background:
+    radial-gradient(circle at 100% 0,rgba(236,72,153,.15),transparent 40%),
+    linear-gradient(145deg,rgba(124,58,237,.14),rgba(17,17,20,.96));
+}
+.guide-callout b{font-size:16px}
+.guide-callout p{margin-top:6px}
+.guide-steps{display:flex;flex-direction:column;gap:9px}
+.guide-step{
+  display:flex;
+  gap:13px;
+  align-items:flex-start;
+  padding:14px;
+  border:1px solid var(--line-soft);
+  border-radius:19px;
+  background:var(--panel);
+}
+.guide-step>span{
+  width:28px;
+  height:28px;
+  flex:0 0 auto;
+  display:grid;
+  place-items:center;
+  border-radius:10px;
+  color:#fff;
+  background:linear-gradient(135deg,#7c3aed,#ec4899);
+  font-size:11px;
+  font-weight:800;
+}
+.guide-step b{font-size:13px}
+.guide-step p{margin-top:3px;font-size:11px}
+.guide-card p{font-size:12px}
+.guide-card strong{color:#e5e5ea}
+.guide-card ul{
+  margin:10px 0 0;
+  padding-left:20px;
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.8;
+}
+.guide-example{
+  margin:14px 0;
+  padding:14px;
+  border-left:3px solid var(--accent);
+  border-radius:0 14px 14px 0;
+  background:#1b1b20;
+}
+.guide-example span{
+  display:block;
+  margin-bottom:5px;
+  color:#a78bfa;
+  font-size:9px;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:1px;
+}
+.guide-example b{font-size:12px;line-height:1.5}
+.guide-chip{
+  padding:7px 10px;
+  border-radius:999px;
+  font-size:10px;
+  font-weight:800;
+}
+.guide-chip.green{color:#bbf7d0;background:rgba(34,197,94,.16)}
+.guide-chip.orange{color:#fde68a;background:rgba(245,158,11,.16)}
+.guide-chip.red{color:#fecdd3;background:rgba(244,63,94,.16)}
+.guide-button{margin-top:14px}
+.guide-source-list{display:flex;flex-direction:column;gap:8px}
+.guide-rules{display:flex;flex-direction:column;gap:8px}
+.guide-rule{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:14px;
+  border-bottom:1px solid var(--line-soft);
+}
+.guide-rule b{
+  width:30px;
+  color:#6f6f78;
+  font-size:12px;
+}
+.guide-rule span{
+  font-size:12px;
+  line-height:1.5;
+}
+.guide-finish{
+  margin:28px 0 10px;
+  padding:23px;
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:26px;
+  background:
+    radial-gradient(circle at 100% 0,rgba(167,139,250,.2),transparent 40%),
+    linear-gradient(145deg,#18181d,#0f0f12);
+}
+.guide-finish h2{margin:9px 0 4px;font-size:23px}
+.guide-finish .primary{margin-top:16px}
+
+
+/* ===== HEALER OS METALLIC THEME ===== */
+:root{
+  --bg:#060708;
+  --panel:#101113;
+  --panel-soft:#17191c;
+  --panel-elevated:#202328;
+  --line:#343840;
+  --line-soft:#24272c;
+  --text:#f6f7f8;
+  --muted:#a5a9b0;
+  --accent:#d9dde3;
+  --accent2:#7f8792;
+  --green:#7ee2a8;
+  --orange:#e6c37a;
+  --red:#e8929f;
+}
+body{
+  background:
+    radial-gradient(circle at 82% -8%,rgba(180,188,199,.12),transparent 30%),
+    radial-gradient(circle at 10% 30%,rgba(255,255,255,.035),transparent 25%),
+    linear-gradient(180deg,#060708,#090a0c 55%,#050607);
+}
+header{
+  background:linear-gradient(180deg,rgba(6,7,8,.98) 68%,rgba(6,7,8,0));
+  border-bottom:1px solid rgba(255,255,255,.025);
+}
+.brand-wrap{display:flex;align-items:center;gap:10px}
+.brand-icon{
+  width:34px;height:34px;border-radius:11px;overflow:hidden;
+  border:1px solid rgba(255,255,255,.18);
+  box-shadow:0 7px 20px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.18);
+}
+.brand-icon img,.avatar img{width:100%;height:100%;object-fit:cover;display:block}
+.brand{
+  font-weight:800;
+  letter-spacing:-1.1px;
+  color:#eef0f3;
+  text-shadow:0 1px 0 #000;
+}
+.brand span{
+  background:linear-gradient(180deg,#ffffff 0%,#bfc5cc 42%,#737b85 70%,#f2f3f4 100%);
+  -webkit-background-clip:text;color:transparent;
+  filter:drop-shadow(0 1px 0 #000);
+}
+.avatar{
+  overflow:hidden;
+  background:#0d0e10;
+  border:1px solid rgba(255,255,255,.2);
+  box-shadow:0 8px 28px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.12);
+}
+.hero{
+  border:1px solid rgba(255,255,255,.13);
+  background:
+    linear-gradient(135deg,rgba(255,255,255,.06),transparent 25%),
+    radial-gradient(circle at 92% 4%,rgba(210,216,225,.13),transparent 34%),
+    linear-gradient(145deg,#1b1d21,#0b0c0e 58%,#121417);
+  box-shadow:
+    0 26px 80px rgba(0,0,0,.5),
+    inset 0 1px 0 rgba(255,255,255,.09),
+    inset 0 -1px 0 rgba(0,0,0,.8);
+}
+.hero:before{
+  content:"";position:absolute;inset:0;pointer-events:none;opacity:.24;
+  background:repeating-linear-gradient(115deg,transparent 0 8px,rgba(255,255,255,.012) 8px 9px);
+}
+.eyebrow{color:#c9ced5}
+.card,.row,.task,.column,.sheet{
+  background:
+    linear-gradient(145deg,rgba(255,255,255,.035),transparent 35%),
+    linear-gradient(155deg,#181a1e,#0e0f11);
+  border-color:rgba(255,255,255,.095);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.045),
+    0 12px 32px rgba(0,0,0,.24);
+}
+.card:hover,.row:hover,.task:hover{
+  border-color:rgba(218,223,230,.24);
+}
+.tag{
+  color:#e2e5e9;
+  background:linear-gradient(180deg,#343840,#202329);
+  border:1px solid rgba(255,255,255,.1);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.08);
+}
+.primary{
+  background:linear-gradient(180deg,#f9fafb 0%,#c9ced5 52%,#8e969f 100%);
+  color:#08090a;
+  border:1px solid #e9ecf0;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.9),
+    inset 0 -1px 0 rgba(0,0,0,.35),
+    0 8px 20px rgba(0,0,0,.35);
+}
+.primary.ghost,.ghost{
+  color:#e6e8eb;
+  background:linear-gradient(180deg,#24272c,#15171a);
+  border:1px solid #3a3e45;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.07);
+}
+.progress{background:#25282d;border:1px solid rgba(255,255,255,.04)}
+.progress i{
+  background:linear-gradient(90deg,#737b84,#f0f2f4 45%,#9da4ac 70%,#dfe3e7);
+  box-shadow:0 0 16px rgba(215,220,226,.22);
+}
+.dot{
+  background:radial-gradient(circle at 32% 28%,#ffffff,#aeb5bd 35%,#555d66 72%,#191b1f);
+  box-shadow:0 0 14px rgba(210,215,222,.35);
+}
+.choice.selected{
+  color:#fff;
+  border-color:#7e858e;
+  background:linear-gradient(180deg,#3a3e45,#202329);
+}
+.weekly-bar{
+  background:linear-gradient(180deg,#ffffff,#aab1b9 45%,#4d545d 80%,#dfe3e7);
+  box-shadow:0 0 18px rgba(211,216,223,.22);
+}
+nav{
+  border-color:rgba(255,255,255,.15);
+  background:linear-gradient(180deg,rgba(36,39,44,.93),rgba(17,19,22,.94));
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.08),
+    0 20px 50px rgba(0,0,0,.72);
+}
+.fab{
+  background:linear-gradient(180deg,#ffffff,#bfc5cc 52%,#7f8790);
+  border:1px solid #f4f5f6;
+  box-shadow:
+    inset 0 1px 0 #fff,
+    inset 0 -1px 0 rgba(0,0,0,.38),
+    0 9px 28px rgba(0,0,0,.48);
+}
+.guide-callout,.guide-finish,.quick-task-intro{
+  background:
+    linear-gradient(145deg,rgba(255,255,255,.045),transparent 30%),
+    linear-gradient(145deg,#1c1f23,#0d0f11);
+  border-color:rgba(255,255,255,.12);
+}
+.month-num{color:#2b2e33}
+.node{
+  background:rgba(19,21,24,.94);
+  border-color:#555c65;
+}
+::-webkit-scrollbar-thumb{background:#3f444b;border-radius:10px}
+
+
+/* ===== v4.1 MOBILE & COMPLETION POLISH ===== */
+.section-title-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-top:4px;
+}
+.section-title-row h2{margin-bottom:11px}
+.done-row{
+  opacity:.78;
+  background:
+    linear-gradient(145deg,rgba(255,255,255,.025),transparent 40%),
+    linear-gradient(155deg,#141619,#0b0c0e);
+}
+.done-check{
+  width:26px;
+  height:26px;
+  flex:0 0 auto;
+  display:grid;
+  place-items:center;
+  border:1px solid rgba(218,223,230,.32);
+  border-radius:10px;
+  color:#0a0b0c;
+  background:linear-gradient(180deg,#f5f6f7,#aeb5bd 58%,#707780);
+  font-size:13px;
+  font-weight:900;
+  box-shadow:inset 0 1px 0 #fff,0 5px 14px rgba(0,0,0,.35);
+}
+.empty-state{
+  padding:18px;
+  border:1px dashed rgba(255,255,255,.12);
+  border-radius:18px;
+  text-align:center;
+  background:rgba(255,255,255,.018);
+}
+.empty-state b{font-size:13px}
+.empty-state p{margin-top:4px;font-size:11px}
+.empty-state.compact{padding:13px}
+
+/* Safari zooms focused fields when font-size is below 16px */
+@media(max-width:699px){
+  html,body{touch-action:manipulation}
+  input,select,textarea{
+    font-size:16px !important;
+    line-height:1.25;
+  }
+  button,.row,.task,.month,.nav-btn,.fab{
+    touch-action:manipulation;
+  }
+  .app,main,.view{
+    width:100%;
+    min-width:0;
+    transform:none !important;
+  }
+}
+
+</style>
+</head>
+<body>
+<img src="https://lh3.googleusercontent.com/d/1wIjGvNq_JC6oEB8qJ2CDFIlsQU39x_tU=s512" alt="" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none">
+<div class="app">
+  <header><div class="top">
+  <div class="brand-wrap">
+    <div class="brand-icon"><img src="https://lh3.googleusercontent.com/d/1wIjGvNq_JC6oEB8qJ2CDFIlsQU39x_tU=s512" alt="HEALER OS"></div>
+    <div class="brand">HEALER <span>OS</span></div>
+  </div>
+  <div class="avatar"><img src="https://lh3.googleusercontent.com/d/1wIjGvNq_JC6oEB8qJ2CDFIlsQU39x_tU=s512" alt="HOS"></div>
+</div></header>
+  <main>
+    <section id="dashboard" class="view active">
+      <div class="hero"><div class="eyebrow">Центр управления артистом</div><h1>Не жди движения.<br>Создавай его каждый день.</h1><p id="heroMission">Загрузка системы…</p><div class="actions"><button class="primary" onclick="continueWork()">▶ Продолжить работу</button><button class="primary ghost" onclick="quickAction('Задачи')">＋ Новая задача</button></div></div>
+      <h2>Сегодня</h2><div class="focus"><div class="card focus-card"><span class="tag">ГЛАВНЫЙ ФОКУС</span><strong id="nextMove">Загрузка…</strong><p>Одно завершённое действие важнее десяти новых идей.</p></div><div class="card focus-card"><span class="tag">АКТИВНЫЙ РЕЛИЗ</span><strong id="activeRelease">—</strong><p id="releaseGoal">—</p></div></div>
+      <h2>Пульс системы</h2><div class="grid"><div class="card metric"><b id="statTasks">0</b><span>активных задач</span></div><div class="card metric"><b id="statPublished">0</b><span>опубликовано</span></div><div class="card metric"><b id="statViews">0</b><span>просмотров</span></div><div class="card metric"><b id="statStreams">0</b><span>прослушиваний</span></div></div>
+      <h2>Ближайшие действия</h2><div id="todayList" class="list"></div>
+      <div class="section-title-row">
+        <h2>Сделано сегодня</h2>
+        <span id="doneTodayCount" class="tag">0</span>
+      </div>
+      <div id="doneTodayList" class="list"></div>
+    </section>
+
+    <section id="roadmap" class="view"><h1>Карта на 6 месяцев</h1><p>Каждый месяц должен доказать новый уровень системы.</p><div id="roadmapGrid" class="roadmap"></div></section>
+    <section id="kanban" class="view"><h1>Производство</h1><p>Перетаскивай задачи и контент между этапами.</p><div class="actions"><button class="primary" onclick="setBoard('tasks')">Задачи</button><button class="primary ghost" onclick="setBoard('content')">Контент</button></div><div id="kanbanBoard" class="kanban"></div></section>
+    <section id="weekly" class="view">
+      <h1>Обзор недели</h1>
+      <p>Раз в неделю внеси основные цифры. Система покажет динамику и сохранит решения.</p>
+
+      <div class="hero weekly-hero">
+        <div class="eyebrow">ЕЖЕНЕДЕЛЬНЫЙ РИТУАЛ · 5–10 МИНУТ</div>
+        <h1 style="font-size:25px">Цифры → вывод → следующее действие</h1>
+        <p>Бери данные из статистики Instagram, мультиссылки и кабинета музыкального дистрибьютора.</p>
+        <div class="actions">
+          <button class="primary" onclick="openWeeklyReport()">Заполнить отчёт</button>
+          <button class="primary ghost" onclick="scrollToWeeklyHistory()">История недель</button>
+        </div>
+      </div>
+
+      <h2>Последняя неделя</h2>
+      <div id="weeklyLatest" class="grid"></div>
+
+      <h2>Динамика</h2>
+      <div class="card">
+        <div class="weekly-chart-tabs">
+          <button class="choice selected" onclick="setWeeklyMetric(this,'Общие просмотры')">Просмотры</button>
+          <button class="choice" onclick="setWeeklyMetric(this,'Прослушивания')">Прослушивания</button>
+          <button class="choice" onclick="setWeeklyMetric(this,'Новые подписчики')">Подписчики</button>
+          <button class="choice" onclick="setWeeklyMetric(this,'Клики мультиссылки')">Клики</button>
+        </div>
+        <div id="weeklyChart" class="weekly-chart"></div>
+      </div>
+
+      <h2>Решение последней недели</h2>
+      <div id="weeklyDecision" class="card"></div>
+
+      <h2 id="weeklyHistoryTitle">История недель</h2>
+      <div id="weeklyHistory" class="list"></div>
+
+      <div class="card weekly-help">
+        <b>Откуда брать данные?</b>
+        <p><strong>Instagram:</strong> профессиональная панель → статистика → выбранный период 7 дней.</p>
+        <p><strong>Клики:</strong> статистика твоей мультиссылки. Если её нет — оставь поле пустым или внеси примерное значение.</p>
+        <p><strong>Музыка:</strong> кабинет дистрибьютора, Spotify for Artists, Apple Music for Artists или другая доступная аналитика.</p>
+        <p><strong>Частота:</strong> один раз в неделю в один и тот же день. Например, каждое воскресенье.</p>
+      </div>
+    </section>
+    <section id="mindmap" class="view"><h1>Mind Map</h1><p>Карта бренда, музыки, контента и роста. Узлы можно двигать.</p><div id="mapCanvas"></div><div class="actions"><button class="primary" onclick="addMindNode()">Добавить узел</button><button class="primary ghost" onclick="saveMap()">Сохранить карту</button></div></section>
+    <section id="more" class="view"><h1>Система</h1><div class="list">
+      <div class="row" onclick="quickAction('Песни')"><div class="dot"></div><div class="grow"><b>Музыка</b><div class="small">Песни и готовность</div></div>›</div>
+      <div class="row" onclick="quickAction('Релизы')"><div class="dot"></div><div class="grow"><b>Релизы</b><div class="small">Релизные циклы</div></div>›</div>
+      <div class="row" onclick="quickAction('Эксперименты')"><div class="dot"></div><div class="grow"><b>Эксперименты</b><div class="small">Гипотезы и решения</div></div>›</div>
+      <div class="row" onclick="quickAction('Контакты')"><div class="dot"></div><div class="grow"><b>CRM</b><div class="small">Люди и отношения</div></div>›</div>
+      <div class="row" onclick="quickAction('Разборы')"><div class="dot"></div><div class="grow"><b>Еженедельный разбор</b><div class="small">Победы, провалы, решение</div></div>›</div>
+      <div class="row" onclick="showView('guide')"><div class="dot"></div><div class="grow"><b>Гайд по HEALER OS</b><div class="small">Как пользоваться системой каждый день</div></div>›</div>
+    </div></section>
+
+    <section id="guide" class="view">
+      <div class="guide-header">
+        <div class="eyebrow">ВСТРОЕННАЯ ИНСТРУКЦИЯ</div>
+        <h1>Как пользоваться HEALER OS</h1>
+        <p>Не изучай всю систему сразу. Открывай нужный раздел в момент, когда он тебе нужен.</p>
+      </div>
+
+      <div class="guide-callout">
+        <b>Главный принцип</b>
+        <p>HEALER OS существует не для хранения информации. Она существует, чтобы каждый день помогать сделать следующий конкретный шаг.</p>
+      </div>
+
+      <h2>Ежедневный цикл · 5–15 минут</h2>
+      <div class="guide-steps">
+        <div class="guide-step"><span>1</span><div><b>Открой Главную</b><p>Посмотри активный релиз и ближайшие действия.</p></div></div>
+        <div class="guide-step"><span>2</span><div><b>Нажми «Продолжить работу»</b><p>Система откроет первую важную незавершённую задачу.</p></div></div>
+        <div class="guide-step"><span>3</span><div><b>Заверши одну карточку</b><p>Лучше одна законченная задача, чем десять начатых.</p></div></div>
+        <div class="guide-step"><span>4</span><div><b>Обнови статус</b><p>Переведи задачу в «В работе» или «Готово».</p></div></div>
+      </div>
+
+      <h2>Как работать с Kanban</h2>
+      <div class="card guide-card">
+        <p><strong>Бэклог</strong> — идеи, которыми пока не занимаешься.</p>
+        <p><strong>Далее</strong> — задачи, которые реально будешь делать скоро.</p>
+        <p><strong>В работе</strong> — максимум 1–3 задачи одновременно.</p>
+        <p><strong>Ожидание</strong> — зависит от другого человека или события.</p>
+        <p><strong>Готово</strong> — законченный результат, а не просто попытка.</p>
+      </div>
+
+      <h2>Как работать с контентом</h2>
+      <div class="card guide-card">
+        <p>Каждый ролик — это гипотеза. Не просто «снять видео», а проверить конкретную идею.</p>
+        <div class="guide-example">
+          <span>Пример</span>
+          <b>Что будет, если первые 2 секунды — крупный план лица, а затем включается главный хук трека?</b>
+        </div>
+        <p>После публикации фиксируй результат и принимай одно решение:</p>
+        <div class="choice-row">
+          <span class="guide-chip green">Повторить</span>
+          <span class="guide-chip orange">Улучшить</span>
+          <span class="guide-chip red">Остановить</span>
+        </div>
+      </div>
+
+      <h2>Карта на 6 месяцев</h2>
+      <div class="card guide-card">
+        <p>Карта — это стратегия, а не ежедневный список задач. Не меняй её после каждого слабого ролика.</p>
+        <p>Раз в конце месяца открой карточку этапа, оцени прогресс и ответь:</p>
+        <ul>
+          <li>Что было доказано?</li>
+          <li>Какой результат получен?</li>
+          <li>Можно ли переходить к следующему этапу?</li>
+        </ul>
+      </div>
+
+      <h2>Недельный отчёт · каждое воскресенье</h2>
+      <div class="card guide-card">
+        <p>Один раз в неделю внеси цифры за последние 7 дней:</p>
+        <ul>
+          <li>сколько роликов опубликовано;</li>
+          <li>общие просмотры;</li>
+          <li>посещения профиля;</li>
+          <li>клики мультиссылки;</li>
+          <li>прослушивания и сохранения;</li>
+          <li>новые подписчики.</li>
+        </ul>
+        <p>Затем запиши лучший ролик, лучший хук, главный вывод и одно действие следующей недели.</p>
+        <button class="primary guide-button" onclick="showView('weekly')">Открыть обзор недели</button>
+      </div>
+
+      <h2>Откуда брать данные</h2>
+      <div class="guide-source-list">
+        <div class="row"><div class="dot"></div><div class="grow"><b>Instagram</b><div class="small">Профессиональная панель → Статистика → последние 7 дней</div></div></div>
+        <div class="row"><div class="dot"></div><div class="grow"><b>Мультиссылка</b><div class="small">Статистика кликов. Если недоступна — оставь 0 или примерное значение.</div></div></div>
+        <div class="row"><div class="dot"></div><div class="grow"><b>Музыкальные площадки</b><div class="small">Spotify for Artists, Apple Music for Artists или кабинет дистрибьютора</div></div></div>
+      </div>
+
+      <h2>Mind Map</h2>
+      <div class="card guide-card">
+        <p>Используй её для общей картины бренда: музыка, визуал, контент, знакомства, будущие релизы и идеи.</p>
+        <p>Не превращай карту в склад случайных мыслей. Каждый узел должен быть связан с направлением или целью.</p>
+      </div>
+
+      <h2>Золотые правила</h2>
+      <div class="guide-rules">
+        <div class="guide-rule"><b>01</b><span>Не оценивай один ролик. Оценивай серию тестов.</span></div>
+        <div class="guide-rule"><b>02</b><span>Не делай вывод после одного дня. Делай вывод после недели.</span></div>
+        <div class="guide-rule"><b>03</b><span>Не выпускай просто песню. Веди релиз как кампанию.</span></div>
+        <div class="guide-rule"><b>04</b><span>Каждая задача должна иметь конкретный результат.</span></div>
+        <div class="guide-rule"><b>05</b><span>Сравнивай HEALER не с другими, а с прошлой неделей.</span></div>
+        <div class="guide-rule"><b>06</b><span>Система должна уменьшать сопротивление, а не создавать новую работу.</span></div>
+      </div>
+
+      <div class="guide-finish">
+        <span class="eyebrow">КОГДА НЕТ МОТИВАЦИИ</span>
+        <h2>Не думай о шести месяцах.</h2>
+        <p>Открой HEALER OS. Нажми «Продолжить работу». Сделай одну карточку. Закрой приложение.</p>
+        <button class="primary" onclick="continueWork()">▶ Продолжить работу</button>
+      </div>
+    </section>
+  </main>
+</div>
+
+<nav>
+  <button class="nav-btn active" data-view="dashboard" onclick="showView('dashboard',this)"><i>⌂</i>Главная</button>
+  <button class="nav-btn" data-view="roadmap" onclick="showView('roadmap',this)"><i>◇</i>Карта</button>
+  <button class="fab" onclick="quickAction(currentSheetForView())">＋</button>
+  <button class="nav-btn" data-view="weekly" onclick="showView('weekly',this)"><i>▦</i>Неделя</button>
+  <button class="nav-btn" data-view="more" onclick="showView('more',this)"><i>•••</i>Ещё</button>
+</nav>
+
+<div class="modal" id="modal" onclick="if(event.target===this)closeModal()"><div class="sheet"><div class="top"><h2 id="modalTitle">Новая запись</h2><button class="primary ghost" onclick="closeModal()">Закрыть</button></div><form id="recordForm"></form></div></div>
+<div class="toast" id="toast">Сохранено</div>
+
+<script>
+let DB={}, boardMode='tasks', mapNodes=[], dragNode=null, dragOffset={x:0,y:0};
+const SHEET_FIELDS={
+'Задачи':['Задача','Статус','Приоритет','Направление','Результат','Срок','Оценка минут','Песня ID','Релиз ID'],
+'Контент':['Название','Статус','Формат','Платформы','Хук','CTA','Песня ID','Релиз ID','Дата публикации','Ссылка'],
+'Песни':['Название','Статус','Приоритет','Хук','Эмоция','Потенциал','Ссылка','Заметки'],
+'Релизы':['Название','Песня ID','Этап','Дата релиза','Главная цель','Следующий шаг','Цель прослушиваний','Цель подписчиков','Статус'],
+'Эксперименты':['Название','Статус','Наблюдение','Гипотеза','Переменная','Метрика успеха','Цель','Решение','Вывод'],
+'Контакты':['Имя','Роль','Компания','Площадка','Контакт','Сила связи','Следующий шаг','Дата контакта','Заметки'],
+'Разборы':['Неделя','Главная победа','Главный провал','Лучший контент','Лучший хук','Ограничение','Решение','Цель следующей недели']
+};
+const SELECTS={
+'Статус':['Бэклог','Далее','В работе','Ожидание','Готово','Отменено','Идея','Сценарий','Готово к съёмке','Монтаж','Запланировано','Опубликовано','Тестируется','Активна','После релиза'],
+'Приоритет':['Критический','Высокий','Средний','Низкий'],
+'Формат':['Исполнение','История','Лайфстайл','Визуал','Закулисье','Мем','Интервью'],
+'Направление':['Музыка','Кампания','Контент','Рост','Аналитика','Операционка'],
+'Решение':['Повторить','Улучшить','Остановить','Тестируется']
+};
+window.onload=()=>google.script.run.withSuccessHandler(init).withFailureHandler(error).getAppData();
+
+function init(data){DB=data; mapNodes=JSON.parse(JSON.stringify(data.mindmap||[])); renderAll(); google.script.run.withSuccessHandler(renderStats).getDashboardStats()}
+function renderAll(){document.getElementById('heroMission').textContent=DB.settings.mission||'';renderDashboard();renderRoadmap();renderKanban();renderWeekly();renderMap()}
+function renderStats(s){
+  const map={
+    Tasks:s.activeTasks||0,
+    Published:s.published||0,
+    Views:s.views||0,
+    Streams:s.streams||0
+  };
+  Object.entries(map).forEach(([key,value])=>{
+    const el=document.getElementById('stat'+key);
+    if(el)el.textContent=fmt(value);
+  });
+}
+function continueWork(){
+  const priorityOrder={'Критический':0,'Высокий':1,'Средний':2,'Низкий':3};
+  const statusOrder={'В работе':0,'Далее':1,'Бэклог':2,'Ожидание':3};
+  const tasks=(DB.tasks||[])
+    .filter(t=>!['Готово','Отменено'].includes(t['Статус']))
+    .sort((a,b)=>{
+      const sa=statusOrder[a['Статус']]??9;
+      const sb=statusOrder[b['Статус']]??9;
+      if(sa!==sb)return sa-sb;
+      const pa=priorityOrder[a['Приоритет']]??9;
+      const pb=priorityOrder[b['Приоритет']]??9;
+      return pa-pb;
+    });
+  if(!tasks.length)return toast('Все задачи завершены');
+  openTask(tasks[0].ID);
+}
+
+function renderDashboard(){
+  let rel=(DB.releases||[]).find(r=>r.ID===DB.settings.activeReleaseId)||DB.releases[0]||{};
+  document.getElementById('activeRelease').textContent=rel['Название']||'Нет активного релиза';
+  document.getElementById('releaseGoal').textContent=rel['Главная цель']||'';
+  document.getElementById('nextMove').textContent=rel['Следующий шаг']||'Выбрать главное действие';
+
+  let tasks=(DB.tasks||[])
+    .filter(t=>!['Готово','Отменено'].includes(t['Статус']))
+    .sort((a,b)=>{
+      const status={'В работе':0,'Далее':1,'Бэклог':2,'Ожидание':3};
+      const priority={'Критический':0,'Высокий':1,'Средний':2,'Низкий':3};
+      return (status[a['Статус']]??9)-(status[b['Статус']]??9)
+        || (priority[a['Приоритет']]??9)-(priority[b['Приоритет']]??9);
+    })
+    .slice(0,5);
+
+  document.getElementById('todayList').innerHTML=tasks.map(t=>`
+    <div class="row" role="button" tabindex="0" onclick="openTask('${t.ID}')" onkeydown="if(event.key==='Enter')openTask('${t.ID}')">
+      <div class="dot"></div>
+      <div class="grow">
+        <b>${esc(t['Задача'])}</b>
+        <div class="small">${esc(t['Направление']||'')} · ${esc(t['Приоритет']||'')}</div>
+      </div>
+      <span class="pill">${esc(t['Статус']||'')}</span>
+    </div>`).join('')||'<div class="empty-state"><b>Активных задач нет</b><p>Можно добавить новую задачу или спокойно закончить день.</p></div>';
+
+  const today=new Date().toISOString().slice(0,10);
+  const completed=(DB.tasks||[])
+    .filter(t=>t['Статус']==='Готово')
+    .filter(t=>{
+      const finished=String(t['Завершено']||'').slice(0,10);
+      return finished===today || (!finished && String(t['Обновлено']||'').slice(0,10)===today);
+    })
+    .slice(-5)
+    .reverse();
+
+  const countEl=document.getElementById('doneTodayCount');
+  if(countEl)countEl.textContent=String(completed.length);
+
+  const doneEl=document.getElementById('doneTodayList');
+  if(doneEl){
+    doneEl.innerHTML=completed.map(t=>`
+      <div class="row done-row" role="button" onclick="openTask('${t.ID}')">
+        <div class="done-check">✓</div>
+        <div class="grow">
+          <b>${esc(t['Задача'])}</b>
+          <div class="small">${esc(t['Направление']||'')} · завершено</div>
+        </div>
+      </div>`).join('') || '<div class="empty-state compact"><p>Здесь появятся завершённые сегодня задачи.</p></div>';
+  }
+}
+function renderRoadmap(){document.getElementById('roadmapGrid').innerHTML=(DB.roadmap||[]).sort((a,b)=>a['Месяц']-b['Месяц']).map(m=>`<div class="card month" role="button" tabindex="0" onclick="openRoadmapMonth('${m.ID}')" onkeydown="if(event.key==='Enter')openRoadmapMonth('${m.ID}')"><div class="month-num">${m['Месяц']}</div><span class="tag">${esc(m['Статус'])}</span><h2>${esc(m['Название'])}</h2><p>${esc(m['Цель'])}</p><div class="small">${esc(m['KPI'])}</div><div class="progress"><i style="width:${Number(m['Прогресс']||0)}%"></i></div><div class="small" style="margin-top:7px">${m['Прогресс']||0}%</div></div>`).join('')}
+function setBoard(mode){boardMode=mode;renderKanban()}
+function renderKanban(){let isTask=boardMode==='tasks', items=isTask?(DB.tasks||[]):(DB.content||[]), statuses=isTask?['Бэклог','Далее','В работе','Ожидание','Готово','Отменено']:['Идея','Сценарий','Готово к съёмке','Монтаж','Запланировано','Опубликовано'];document.getElementById('kanbanBoard').innerHTML=statuses.map(s=>`<div class="column" data-status="${s}" ondragover="event.preventDefault()" ondrop="dropCard(event,'${s}')"><div class="column-head"><span>${s}</span><span>${items.filter(x=>x['Статус']===s).length}</span></div>${items.filter(x=>x['Статус']===s).map(x=>`<div class="task" draggable="true"
+  onpointerdown="cardPointerDown(event,'${x.ID}','${isTask?'task':'content'}')"
+  onpointerup="cardPointerUp(event,'${x.ID}','${isTask?'task':'content'}')"
+  onpointercancel="cardPointerCancel()"
+  ondragstart="dragCard(event,'${x.ID}')"
+  ondragend="dragCardEnd()"><h4>${esc(x[isTask?'Задача':'Название'])}</h4><div class="task-meta"><span class="pill">${esc(x[isTask?'Приоритет':'Формат']||'')}</span><span class="pill">${esc(x[isTask?'Направление':'Платформы']||'')}</span></div></div>`).join('')}</div>`).join('')}
+let draggedId='',cardPress=null;
+function cardPointerDown(e,id,type){
+  cardPress={id,type,x:e.clientX,y:e.clientY,time:Date.now(),moved:false};
+}
+function cardPointerUp(e,id,type){
+  if(!cardPress||cardPress.id!==id)return;
+  const moved=Math.hypot(e.clientX-cardPress.x,e.clientY-cardPress.y)>10;
+  const shortTap=(Date.now()-cardPress.time)<500;
+  cardPress=null;
+  if(!moved&&shortTap&&!window.__justDragged){
+    type==='task'?openTask(id):openContent(id);
+  }
+}
+function cardPointerCancel(){cardPress=null}
+function dragCard(e,id){
+  draggedId=id;
+  window.__justDragged=true;
+  if(e.dataTransfer){
+    e.dataTransfer.effectAllowed='move';
+    e.dataTransfer.setData('text/plain',id);
+  }
+}
+function dragCardEnd(){
+  cardPress=null;
+  setTimeout(()=>window.__justDragged=false,120);
+}
+function dropCard(e,status){
+  e.preventDefault();
+  let sheet=boardMode==='tasks'?'Задачи':'Контент',
+      arr=boardMode==='tasks'?DB.tasks:DB.content,
+      item=arr.find(x=>x.ID===draggedId);
+  if(!item)return;
+  item['Статус']=status;
+  renderKanban();
+  google.script.run.withFailureHandler(error).updateField(sheet,draggedId,'Статус',status);
+  setTimeout(()=>window.__justDragged=false,180);
+}
+let weeklyMetric='Общие просмотры';
+
+function renderWeekly(){
+  const reports=[...(DB.weekly||[])].sort((a,b)=>String(a['Дата конца']||a['Неделя']).localeCompare(String(b['Дата конца']||b['Неделя'])));
+  const latest=reports[reports.length-1];
+
+  const latestEl=document.getElementById('weeklyLatest');
+  const decisionEl=document.getElementById('weeklyDecision');
+  const historyEl=document.getElementById('weeklyHistory');
+
+  if(!latest){
+    latestEl.innerHTML=`
+      <div class="card metric"><b>0</b><span>отчётов</span></div>
+      <div class="card metric"><b>—</b><span>первый отчёт ещё не заполнен</span></div>`;
+    decisionEl.innerHTML=`<b>Начни с первого отчёта</b><p>Внеси примерные показатели последних семи дней. Идеальная точность не нужна — важна одинаковая методика каждую неделю.</p>`;
+    historyEl.innerHTML=`<div class="row" onclick="openWeeklyReport()"><div class="dot"></div><div class="grow"><b>Создать первый недельный отчёт</b><div class="small">Займёт около пяти минут</div></div>›</div>`;
+  } else {
+    const metrics=[
+      ['Опубликовано роликов','роликов'],
+      ['Общие просмотры','просмотров'],
+      ['Клики мультиссылки','кликов'],
+      ['Прослушивания','прослушиваний'],
+      ['Сохранения трека','сохранений'],
+      ['Новые подписчики','подписчиков']
+    ];
+    latestEl.innerHTML=metrics.map(([key,label])=>`
+      <div class="card metric">
+        <b>${fmt(latest[key]||0)}</b>
+        <span>${label}</span>
+      </div>`).join('');
+
+    decisionEl.innerHTML=`
+      <span class="tag">${esc(latest['Неделя']||'ПОСЛЕДНЯЯ НЕДЕЛЯ')}</span>
+      <h2 style="margin:14px 0 6px">${esc(latest['Главное действие следующей недели']||'Следующее действие пока не указано')}</h2>
+      <p><strong>Главный вывод:</strong> ${esc(latest['Главный вывод']||'—')}</p>
+      ${latest['Что не повторять']?`<p><strong>Не повторять:</strong> ${esc(latest['Что не повторять'])}</p>`:''}
+      ${latest['Лучший ролик']?`<p><strong>Лучший ролик:</strong> ${esc(latest['Лучший ролик'])}</p>`:''}
+      ${latest['Лучший хук']?`<p><strong>Лучший хук:</strong> ${esc(latest['Лучший хук'])}</p>`:''}`;
+
+    historyEl.innerHTML=reports.slice().reverse().map(r=>`
+      <div class="row" onclick="openWeeklyDetails('${r.ID}')">
+        <div class="dot"></div>
+        <div class="grow">
+          <b>${esc(r['Неделя']||'Неделя')}</b>
+          <div class="small">${fmt(r['Общие просмотры']||0)} просмотров · ${fmt(r['Прослушивания']||0)} прослушиваний · +${fmt(r['Новые подписчики']||0)} подписчиков</div>
+        </div>
+        <span class="pill">${esc(r['Дата конца']||'')}</span>
+      </div>`).join('');
+  }
+
+  renderWeeklyChart();
+}
+
+function setWeeklyMetric(button,metric){
+  weeklyMetric=metric;
+  button.parentElement.querySelectorAll('.choice').forEach(x=>x.classList.remove('selected'));
+  button.classList.add('selected');
+  renderWeeklyChart();
+}
+
+function renderWeeklyChart(){
+  const reports=[...(DB.weekly||[])].sort((a,b)=>String(a['Дата конца']||a['Неделя']).localeCompare(String(b['Дата конца']||b['Неделя']))).slice(-12);
+  const chart=document.getElementById('weeklyChart');
+  if(!reports.length){
+    chart.innerHTML=`<div class="weekly-empty">После первого отчёта здесь появится график.</div>`;
+    return;
+  }
+  const values=reports.map(r=>Number(r[weeklyMetric]||0));
+  const max=Math.max(...values,1);
+  chart.innerHTML=reports.map((r,i)=>{
+    const height=Math.max(4,values[i]/max*100);
+    return `<div class="weekly-bar-wrap" title="${esc(r['Неделя'])}: ${fmt(values[i])}">
+      <div class="weekly-value">${fmt(values[i])}</div>
+      <div class="weekly-bar" style="height:${height}%"></div>
+      <div class="weekly-label">${esc(shortWeek(r['Неделя']||String(i+1)))}</div>
+    </div>`;
+  }).join('');
+}
+
+function shortWeek(value){
+  const s=String(value);
+  return s.length>8?s.slice(0,8):s;
+}
+
+function scrollToWeeklyHistory(){
+  document.getElementById('weeklyHistoryTitle')?.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function weekDefaults(){
+  const end=new Date();
+  const start=new Date();
+  start.setDate(end.getDate()-6);
+  const getWeek=d=>{
+    const date=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));
+    const day=date.getUTCDay()||7;
+    date.setUTCDate(date.getUTCDate()+4-day);
+    const yearStart=new Date(Date.UTC(date.getUTCFullYear(),0,1));
+    return Math.ceil((((date-yearStart)/86400000)+1)/7);
+  };
+  return {
+    label:`Неделя ${getWeek(end)} · ${end.getFullYear()}`,
+    start:start.toISOString().slice(0,10),
+    end:end.toISOString().slice(0,10)
+  };
+}
+
+function openWeeklyReport(id){
+  const existing=id?(DB.weekly||[]).find(r=>r.ID===id):null;
+  const d=weekDefaults();
+  document.getElementById('modalTitle').textContent=existing?'Редактирование отчёта':'Недельный отчёт';
+  const form=document.getElementById('recordForm');
+  const v=(key,def='')=>esc(existing?.[key]??def);
+
+  form.innerHTML=`
+    <div class="quick-task-intro">
+      <b>Снимок одной недели</b>
+      <p>Допустимы примерные цифры. Главное — использовать одну методику каждую неделю.</p>
+    </div>
+
+    <label class="quick-label">Название недели</label>
+    <input name="Неделя" value="${v('Неделя',d.label)}" required>
+
+    <div class="form-grid">
+      <div>
+        <label class="quick-label">Начало</label>
+        <input type="date" name="Дата начала" value="${v('Дата начала',d.start)}">
+      </div>
+      <div>
+        <label class="quick-label">Конец</label>
+        <input type="date" name="Дата конца" value="${v('Дата конца',d.end)}">
+      </div>
+    </div>
+
+    <h2 style="margin-top:18px">Instagram и контент</h2>
+    <div class="form-grid">
+      ${weeklyNumberField('Опубликовано роликов',existing)}
+      ${weeklyNumberField('Общие просмотры',existing)}
+      ${weeklyNumberField('Посещения профиля',existing)}
+      ${weeklyNumberField('Новые подписчики',existing)}
+    </div>
+
+    <h2>Переходы и музыка</h2>
+    <div class="form-grid">
+      ${weeklyNumberField('Клики мультиссылки',existing)}
+      ${weeklyNumberField('Прослушивания',existing)}
+      ${weeklyNumberField('Сохранения трека',existing)}
+    </div>
+
+    <h2>Что сработало</h2>
+    <label class="quick-label">Лучший ролик</label>
+    <input name="Лучший ролик" value="${v('Лучший ролик')}" placeholder="Например: Reels с ночной поездкой">
+
+    <label class="quick-label">Ссылка на лучший ролик</label>
+    <input type="url" name="Ссылка на лучший ролик" value="${v('Ссылка на лучший ролик')}" placeholder="https://">
+
+    <label class="quick-label">Лучший хук</label>
+    <input name="Лучший хук" value="${v('Лучший хук')}" placeholder="Какая первая фраза или кадр сработали?">
+
+    <label class="quick-label">Главный вывод</label>
+    <textarea name="Главный вывод" required placeholder="Почему результат получился именно таким?">${v('Главный вывод')}</textarea>
+
+    <label class="quick-label">Что не повторять</label>
+    <textarea name="Что не повторять" placeholder="Что забрало время, но не дало результата?">${v('Что не повторять')}</textarea>
+
+    <label class="quick-label">Одно главное действие следующей недели</label>
+    <textarea name="Главное действие следующей недели" required placeholder="Например: снять пять вариаций лучшего Reels">${v('Главное действие следующей недели')}</textarea>
+
+    <button type="submit" class="primary quick-save">Сохранить отчёт</button>`;
+
+  form.onsubmit=e=>{
+    e.preventDefault();
+    const rec=existing?{ID:existing.ID}:{};
+    new FormData(form).forEach((value,key)=>{
+      const numeric=['Опубликовано роликов','Общие просмотры','Посещения профиля','Клики мультиссылки','Прослушивания','Сохранения трека','Новые подписчики'];
+      rec[key]=numeric.includes(key)?Number(value||0):value;
+    });
+    google.script.run.withSuccessHandler(()=>{
+      toast('Недельный отчёт сохранён');
+      closeModal();
+      reload();
+    }).withFailureHandler(error).saveRecord('Недельные отчёты',rec);
+  };
+  document.getElementById('modal').classList.add('show');
+}
+
+function weeklyNumberField(name,existing){
+  const value=existing?.[name]??0;
+  return `<div><label class="quick-label">${name}</label><input type="number" min="0" name="${name}" value="${esc(value)}"></div>`;
+}
+
+function openWeeklyDetails(id){
+  const r=(DB.weekly||[]).find(x=>x.ID===id);
+  if(!r)return;
+  document.getElementById('modalTitle').textContent=r['Неделя']||'Недельный отчёт';
+  document.getElementById('recordForm').innerHTML=`
+    <div class="quick-task-intro">
+      <b>${fmt(r['Общие просмотры']||0)} просмотров · ${fmt(r['Прослушивания']||0)} прослушиваний</b>
+      <p>${esc(r['Дата начала']||'')} — ${esc(r['Дата конца']||'')}</p>
+    </div>
+    <div class="grid">
+      <div class="card metric"><b>${fmt(r['Опубликовано роликов']||0)}</b><span>роликов</span></div>
+      <div class="card metric"><b>${fmt(r['Посещения профиля']||0)}</b><span>профиль</span></div>
+      <div class="card metric"><b>${fmt(r['Клики мультиссылки']||0)}</b><span>клики</span></div>
+      <div class="card metric"><b>+${fmt(r['Новые подписчики']||0)}</b><span>подписчики</span></div>
+    </div>
+    <div class="card" style="margin-top:12px">
+      <b>Главный вывод</b><p>${esc(r['Главный вывод']||'—')}</p>
+      <b style="display:block;margin-top:14px">Следующее действие</b><p>${esc(r['Главное действие следующей недели']||'—')}</p>
+      ${r['Что не повторять']?`<b style="display:block;margin-top:14px">Не повторять</b><p>${esc(r['Что не повторять'])}</p>`:''}
+    </div>
+    <button type="button" class="advanced-toggle" onclick="openWeeklyReport('${r.ID}')">Редактировать отчёт</button>`;
+  document.getElementById('modal').classList.add('show');
+}
+function renderMap(){const canvas=document.getElementById('mapCanvas');canvas.innerHTML='';mapNodes.forEach(n=>{if(n['Родитель ID']){let p=mapNodes.find(x=>x.ID===n['Родитель ID']);if(p)drawEdge(canvas,p,n)}});mapNodes.forEach(n=>{let el=document.createElement('div');el.className='node '+(n['Тип']==='root'?'root':'');el.dataset.id=n.ID;el.style.left=`calc(${n.X}% - 65px)`;el.style.top=`calc(${n.Y}% - 28px)`;el.style.borderColor=n['Цвет']||'#555';el.innerHTML=`${esc(n['Название'])}<small>${esc(n['Описание']||'')}</small>`;el.onpointerdown=startNodeDrag;canvas.appendChild(el)})}
+function drawEdge(c,p,n){let x1=c.clientWidth*Number(p.X)/100,y1=c.clientHeight*Number(p.Y)/100,x2=c.clientWidth*Number(n.X)/100,y2=c.clientHeight*Number(n.Y)/100,d=Math.hypot(x2-x1,y2-y1),a=Math.atan2(y2-y1,x2-x1)*180/Math.PI;let e=document.createElement('div');e.className='edge';e.style.left=x1+'px';e.style.top=y1+'px';e.style.width=d+'px';e.style.transform=`rotate(${a}deg)`;c.appendChild(e)}
+function startNodeDrag(e){dragNode=mapNodes.find(n=>n.ID===e.currentTarget.dataset.id);let r=e.currentTarget.getBoundingClientRect();dragOffset={x:e.clientX-r.left,y:e.clientY-r.top};e.currentTarget.setPointerCapture(e.pointerId);e.currentTarget.onpointermove=moveNode;e.currentTarget.onpointerup=endNode}
+function moveNode(e){if(!dragNode)return;let c=document.getElementById('mapCanvas').getBoundingClientRect();dragNode.X=Math.max(4,Math.min(96,(e.clientX-c.left)/c.width*100));dragNode.Y=Math.max(5,Math.min(95,(e.clientY-c.top)/c.height*100));renderMap()}
+function endNode(){dragNode=null}
+function addMindNode(){let title=prompt('Название узла');if(!title)return;let parent=mapNodes[0]?.ID||'';mapNodes.push({ID:'NODE-'+Date.now(),Название:title,Тип:'idea','Родитель ID':parent,X:50+Math.random()*20-10,Y:50+Math.random()*20-10,Цвет:'#a78bfa',Описание:'', 'Связанный ID':''});renderMap()}
+function saveMap(){google.script.run.withSuccessHandler(()=>toast('Карта сохранена')).withFailureHandler(error).saveMindMap(mapNodes)}
+function showView(id,btn){document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active',b.dataset.view===id));if(id==='mindmap')setTimeout(renderMap,50)}
+function currentSheetForView(){let v=document.querySelector('.view.active').id;return v==='kanban'?(boardMode==='tasks'?'Задачи':'Контент'):v==='roadmap'?'Карта 6 месяцев':v==='weekly'?'Недельные отчёты':'Задачи'}
+function quickAction(sheet){
+  if(sheet==='Задачи') return openQuickTask();
+  if(sheet==='Недельные отчёты') return openWeeklyReport();
+  let fields=SHEET_FIELDS[sheet];
+  if(!fields){
+    if(sheet==='Карта 6 месяцев') return toast('Карта редактируется в таблице');
+    return;
+  }
+  document.getElementById('modalTitle').textContent='Добавить: '+sheet;
+  let form=document.getElementById('recordForm');
+  form.innerHTML=fields.map(f=>fieldHTML(f)).join('')+`<button type="submit" class="primary quick-save">Сохранить</button>`;
+  form.onsubmit=e=>{
+    e.preventDefault();
+    let rec={};
+    new FormData(form).forEach((v,k)=>rec[k]=v);
+    google.script.run.withSuccessHandler(()=>{
+      toast('Сохранено');
+      closeModal();
+      reload();
+    }).withFailureHandler(error).saveRecord(sheet,rec)
+  };
+  document.getElementById('modal').classList.add('show');
+}
+
+function openQuickTask(){
+  document.getElementById('modalTitle').textContent='Новая задача';
+  let form=document.getElementById('recordForm');
+  form.innerHTML=`
+    <div class="quick-task-intro">
+      <b>Что конкретно нужно сделать?</b>
+      <p>Достаточно названия, направления и срока. Остальное система заполнит сама.</p>
+    </div>
+
+    <label class="quick-label">Задача</label>
+    <input name="Задача" id="quickTaskName" placeholder="Например: снять Reels с первым хуком" required autofocus>
+
+    <label class="quick-label">Направление</label>
+    <div class="choice-row" id="directionChoices">
+      ${['Контент','Рост','Музыка','Кампания','Аналитика','Операционка'].map((x,i)=>`<button type="button" class="choice ${i===0?'selected':''}" data-value="${x}" onclick="selectChoice(this,'quickDirection')">${x}</button>`).join('')}
+    </div>
+    <input type="hidden" name="Направление" id="quickDirection" value="Контент">
+
+    <label class="quick-label">Когда?</label>
+    <div class="date-shortcuts">
+      <button type="button" class="choice selected" onclick="setQuickDate(this,0)">Сегодня</button>
+      <button type="button" class="choice" onclick="setQuickDate(this,1)">Завтра</button>
+      <button type="button" class="choice" onclick="setQuickDate(this,7)">Неделя</button>
+    </div>
+    <input type="hidden" name="Срок" id="quickDueDate" value="${isoDateOffset(0)}">
+
+    <button type="button" class="advanced-toggle" onclick="toggleAdvanced(this)">Дополнительные настройки ↓</button>
+    <div class="advanced-fields" id="advancedFields">
+      <label class="quick-label">Приоритет</label>
+      <select name="Приоритет">
+        <option>Высокий</option>
+        <option>Критический</option>
+        <option>Средний</option>
+        <option>Низкий</option>
+      </select>
+
+      <label class="quick-label">Статус</label>
+      <select name="Статус">
+        <option>Далее</option>
+        <option>В работе</option>
+        <option>Бэклог</option>
+        <option>Ожидание</option>
+      </select>
+
+      <label class="quick-label">Ожидаемый результат</label>
+      <textarea name="Результат" placeholder="Как понять, что задача действительно завершена?"></textarea>
+
+      <label class="quick-label">Оценка времени, минут</label>
+      <input type="number" name="Оценка минут" value="30" min="5" step="5">
+
+      <label class="quick-label">Песня ID / Релиз ID</label>
+      <div class="form-grid">
+        <input name="Песня ID" value="SONG-001">
+        <input name="Релиз ID" value="REL-001">
+      </div>
+    </div>
+
+    <button type="submit" class="primary quick-save">Добавить задачу</button>
+  `;
+  form.onsubmit=e=>{
+    e.preventDefault();
+    let rec={
+      'Статус':'Далее',
+      'Приоритет':'Высокий',
+      'Тип работы':'Быстрая победа',
+      'Оценка минут':30,
+      'Песня ID':'SONG-001',
+      'Релиз ID':'REL-001'
+    };
+    new FormData(form).forEach((v,k)=>{if(v!=='')rec[k]=v});
+    if(!rec['Задача']?.trim()) return toast('Напиши название задачи');
+    google.script.run.withSuccessHandler(()=>{
+      toast('Задача добавлена');
+      closeModal();
+      reload();
+    }).withFailureHandler(error).saveRecord('Задачи',rec);
+  };
+  document.getElementById('modal').classList.add('show');
+  setTimeout(()=>document.getElementById('quickTaskName')?.focus(),200);
+}
+
+function selectChoice(button,inputId){
+  button.parentElement.querySelectorAll('.choice').forEach(x=>x.classList.remove('selected'));
+  button.classList.add('selected');
+  document.getElementById(inputId).value=button.dataset.value;
+}
+
+function setQuickDate(button,days){
+  button.parentElement.querySelectorAll('.choice').forEach(x=>x.classList.remove('selected'));
+  button.classList.add('selected');
+  document.getElementById('quickDueDate').value=isoDateOffset(days);
+}
+
+function isoDateOffset(days){
+  let d=new Date();
+  d.setDate(d.getDate()+days);
+  return d.toISOString().slice(0,10);
+}
+
+function toggleAdvanced(button){
+  const box=document.getElementById('advancedFields');
+  box.classList.toggle('show');
+  button.textContent=box.classList.contains('show')?'Скрыть настройки ↑':'Дополнительные настройки ↓';
+}
+
+function fieldHTML(f){if(SELECTS[f])return`<label class="small">${f}</label><select name="${f}"><option value=""></option>${SELECTS[f].map(x=>`<option>${x}</option>`).join('')}</select>`;let type=(f.includes('Дата')||f==='Срок'||f==='Неделя')?'date':(f.includes('Цель прослуш')||f.includes('Оценка')||f==='Хук'||f==='Эмоция'||f==='Потенциал')?'number':'text';let long=['Результат','Заметки','Гипотеза','Наблюдение','Вывод','Главная цель','Следующий шаг','Главная победа','Главный провал'].includes(f);return`<label class="small">${f}</label>${long?`<textarea name="${f}"></textarea>`:`<input type="${type}" name="${f}">`}`}
+
+
+function openRoadmapMonth(id){
+  const month=(DB.roadmap||[]).find(m=>m.ID===id);
+  if(!month)return toast('Этап не найден');
+
+  document.getElementById('modalTitle').textContent=`Месяц ${month['Месяц']} · ${month['Название']}`;
+  const form=document.getElementById('recordForm');
+  form.innerHTML=`
+    <div class="quick-task-intro">
+      <b>${esc(month['Цель']||'Цель не указана')}</b>
+      <p>${esc(month['Ключевой результат']||'')}</p>
+    </div>
+
+    <div class="grid" style="margin-bottom:14px">
+      <div class="card metric">
+        <b style="font-size:15px">${esc(month['Статус']||'—')}</b>
+        <span>статус</span>
+      </div>
+      <div class="card metric">
+        <b style="font-size:15px">${Number(month['Прогресс']||0)}%</b>
+        <span>прогресс</span>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:12px">
+      <b>KPI месяца</b>
+      <p>${esc(month['KPI']||'—')}</p>
+    </div>
+
+    <label class="quick-label">Статус</label>
+    <select name="Статус">
+      ${['Не начато','В работе','Завершено','Приостановлено'].map(x=>`<option ${String(month['Статус'])===x?'selected':''}>${x}</option>`).join('')}
+    </select>
+
+    <label class="quick-label">Прогресс, %</label>
+    <input type="range" min="0" max="100" step="5" name="Прогресс" value="${Number(month['Прогресс']||0)}" oninput="document.getElementById('roadmapProgressValue').textContent=this.value+'%'">
+    <div id="roadmapProgressValue" class="small" style="text-align:right;margin-top:-8px;margin-bottom:14px">${Number(month['Прогресс']||0)}%</div>
+
+    <button type="submit" class="primary quick-save">Сохранить этап</button>
+  `;
+
+  form.onsubmit=e=>{
+    e.preventDefault();
+    const rec={...month,ID:month.ID};
+    const fd=new FormData(form);
+    rec['Статус']=fd.get('Статус');
+    rec['Прогресс']=Number(fd.get('Прогресс')||0);
+
+    google.script.run.withSuccessHandler(()=>{
+      toast('Этап обновлён');
+      closeModal();
+      reload();
+    }).withFailureHandler(error).saveRecord('Карта 6 месяцев',rec);
+  };
+
+  document.getElementById('modal').classList.add('show');
+}
+
+function openTask(id){
+  const task=(DB.tasks||[]).find(t=>t.ID===id);
+  if(!task)return toast('Задача не найдена');
+
+  document.getElementById('modalTitle').textContent='Задача';
+  const form=document.getElementById('recordForm');
+  form.innerHTML=`
+    <div class="quick-task-intro">
+      <b>${esc(task['Задача']||'Без названия')}</b>
+      <p>${esc(task['Результат']||'Ожидаемый результат пока не указан.')}</p>
+    </div>
+
+    <div class="grid" style="margin-bottom:14px">
+      <div class="card metric">
+        <b style="font-size:15px">${esc(task['Статус']||'—')}</b>
+        <span>статус</span>
+      </div>
+      <div class="card metric">
+        <b style="font-size:15px">${esc(task['Приоритет']||'—')}</b>
+        <span>приоритет</span>
+      </div>
+      <div class="card metric">
+        <b style="font-size:15px">${esc(task['Направление']||'—')}</b>
+        <span>направление</span>
+      </div>
+      <div class="card metric">
+        <b style="font-size:15px">${esc(task['Срок']||'Без срока')}</b>
+        <span>срок</span>
+      </div>
+    </div>
+
+    <div class="list" style="margin-bottom:14px">
+      <div class="row">
+        <div class="dot"></div>
+        <div class="grow">
+          <b>Оценка времени</b>
+          <div class="small">${esc(task['Оценка минут']||30)} минут</div>
+        </div>
+      </div>
+      ${task['Песня ID']?`<div class="row"><div class="dot"></div><div class="grow"><b>Песня</b><div class="small">${esc(task['Песня ID'])}</div></div></div>`:''}
+      ${task['Релиз ID']?`<div class="row"><div class="dot"></div><div class="grow"><b>Релиз</b><div class="small">${esc(task['Релиз ID'])}</div></div></div>`:''}
+    </div>
+
+    <div class="form-grid">
+      <button type="button" class="primary ghost" onclick="setTaskStatus('${task.ID}','В работе')">В работу</button>
+      <button type="button" class="primary" onclick="setTaskStatus('${task.ID}','Готово')">Готово</button>
+    </div>
+
+    <button type="button" class="advanced-toggle" onclick="showTaskEdit('${task.ID}')">Редактировать задачу</button>
+  `;
+  document.getElementById('modal').classList.add('show');
+}
+
+function setTaskStatus(id,status){
+  const task=(DB.tasks||[]).find(t=>t.ID===id);
+  if(!task)return;
+
+  const updated={...task,ID:id,'Статус':status};
+  if(status==='Готово'){
+    updated['Завершено']=new Date().toISOString();
+  }else if(task['Завершено']){
+    updated['Завершено']='';
+  }
+
+  google.script.run.withSuccessHandler(()=>{
+    toast(status==='Готово'?'Задача завершена ✓':'Задача взята в работу');
+    closeModal();
+    reload();
+  }).withFailureHandler(error).saveRecord('Задачи',updated);
+}
+
+function showTaskEdit(id){
+  const task=(DB.tasks||[]).find(t=>t.ID===id);
+  if(!task)return;
+  document.getElementById('modalTitle').textContent='Редактирование задачи';
+  const form=document.getElementById('recordForm');
+  const fields=['Задача','Статус','Приоритет','Направление','Результат','Срок','Оценка минут','Песня ID','Релиз ID'];
+  form.innerHTML=fields.map(f=>{
+    if(SELECTS[f]){
+      return `<label class="small">${f}</label><select name="${f}">${SELECTS[f].map(x=>`<option ${String(task[f])===x?'selected':''}>${x}</option>`).join('')}</select>`;
+    }
+    const type=(f==='Срок')?'date':(f==='Оценка минут'?'number':'text');
+    const long=f==='Результат';
+    return `<label class="small">${f}</label>${long?`<textarea name="${f}">${esc(task[f]||'')}</textarea>`:`<input type="${type}" name="${f}" value="${esc(task[f]||'')}">`}`;
+  }).join('')+`<button type="submit" class="primary quick-save">Сохранить изменения</button>`;
+
+  form.onsubmit=e=>{
+    e.preventDefault();
+    const updated={ID:id};
+    new FormData(form).forEach((v,k)=>updated[k]=v);
+    google.script.run.withSuccessHandler(()=>{
+      toast('Изменения сохранены');
+      closeModal();
+      reload();
+    }).withFailureHandler(error).saveRecord('Задачи',updated);
+  };
+}
+
+function openContent(id){
+  const item=(DB.content||[]).find(c=>c.ID===id);
+  if(!item)return toast('Контент не найден');
+  document.getElementById('modalTitle').textContent='Контент';
+  document.getElementById('recordForm').innerHTML=`
+    <div class="quick-task-intro">
+      <b>${esc(item['Название']||'Без названия')}</b>
+      <p>${esc(item['Хук']||'Хук не указан')}</p>
+    </div>
+    <div class="list">
+      <div class="row"><div class="dot"></div><div class="grow"><b>Статус</b><div class="small">${esc(item['Статус']||'—')}</div></div></div>
+      <div class="row"><div class="dot"></div><div class="grow"><b>Формат</b><div class="small">${esc(item['Формат']||'—')}</div></div></div>
+      <div class="row"><div class="dot"></div><div class="grow"><b>Платформы</b><div class="small">${esc(item['Платформы']||'—')}</div></div></div>
+      <div class="row"><div class="dot"></div><div class="grow"><b>CTA</b><div class="small">${esc(item['CTA']||'—')}</div></div></div>
+    </div>
+  `;
+  document.getElementById('modal').classList.add('show');
+}
+
+function closeModal(){document.getElementById('modal').classList.remove('show')}
+function reload(){google.script.run.withSuccessHandler(init).getAppData()}
+function toast(t){let e=document.getElementById('toast');e.textContent=t;e.classList.add('show');setTimeout(()=>e.classList.remove('show'),1800)}
+function fmt(n){return Intl.NumberFormat('ru-RU',{notation:Number(n)>9999?'compact':'standard'}).format(Number(n||0))}
+function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
+function error(e){console.error(e);toast(e.message||String(e))}
+</script>
+</body>
+</html>
